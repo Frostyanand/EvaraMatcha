@@ -1,7 +1,7 @@
 import { Cormorant_Garamond, DM_Sans, Cinzel } from "next/font/google";
 import "./globals.css";
 import GrainOverlay from "@/components/GrainOverlay";
-import CustomCursor from "@/components/CustomCursor";
+
 import Navbar from "@/components/Navbar";
 
 const cormorant = Cormorant_Garamond({
@@ -22,7 +22,7 @@ const dmSans = DM_Sans({
 const cinzel = Cinzel({
   variable: "--font-cinzel",
   subsets: ["latin"],
-  weight: ["400", "600"],
+  weight: ["400", "500"],
   display: "swap",
 });
 
@@ -57,7 +57,7 @@ export default function RootLayout({ children }) {
     >
       <body>
         <GrainOverlay />
-        <CustomCursor />
+
         <Navbar />
         {children}
       </body>

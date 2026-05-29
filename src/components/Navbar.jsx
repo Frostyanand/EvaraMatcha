@@ -3,48 +3,58 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
+const navItems = ["HOME", "MENU", "EXPERIENCE", "ABOUT", "VISIT"];
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
+    // Trigger entrance animations after mount
+    const timer = setTimeout(() => setLoaded(true), 100);
+
     const handleScroll = () => {
       setScrolled(window.scrollY > 60);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   return (
     <header className={`navbar ${scrolled ? "is-scrolled" : ""}`}>
-      <div className="container nav-inner">
-        <Link href="#home" className="nav-logo">
+      <div className="nav-inner">
+        <Link
+          href="#home"
+          className={`nav-logo ${loaded ? "is-visible" : ""}`}
+        >
           EVARAMATCHA
         </Link>
 
-        <nav>
+        <nav className="nav-right">
           <ul className="nav-links">
-            <li>
-              <Link href="#home">Home</Link>
-            </li>
-            <li>
-              <Link href="#menu">Menu</Link>
-            </li>
-            <li>
-              <Link href="#experience">Experience</Link>
-            </li>
-            <li>
-              <Link href="#about">About</Link>
-            </li>
-            <li>
-              <Link href="#visit">Visit</Link>
-            </li>
-            <li>
-              <Link href="#" className="nav-cta">
-                Reserve a Table
-              </Link>
-            </li>
+            {navItems.map((item, i) => (
+              <li key={item}>
+                <Link
+                  href={`#${item.toLowerCase()}`}
+                  className={`nav-link ${loaded ? "is-visible" : ""}`}
+                  style={{ transitionDelay: loaded ? `${i * 60}ms` : "0ms" }}
+                >
+                  {item}
+                </Link>
+              </li>
+            ))}
           </ul>
+          <Link
+            href="#"
+            className={`nav-cta ${loaded ? "is-visible" : ""}`}
+            style={{ transitionDelay: loaded ? `${navItems.length * 60}ms` : "0ms" }}
+          >
+            RESERVE A TABLE
+          </Link>
         </nav>
 
         <button className="nav-hamburger" aria-label="Toggle navigation menu">

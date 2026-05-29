@@ -3,25 +3,29 @@
 import { useEffect, useRef, useCallback } from "react";
 
 export default function CustomCursor() {
-  const cursorRef = useRef(null);
-  const posRef = useRef({ x: 0, y: 0 });
-  const targetRef = useRef({ x: 0, y: 0 });
+  const dotRef = useRef(null);
+  const ringRef = useRef(null);
+  const dotPos = useRef({ x: 0, y: 0 });
+  const ringPos = useRef({ x: 0, y: 0 });
+  const targetPos = useRef({ x: 0, y: 0 });
   const rafRef = useRef(null);
+  const isHovering = useRef(false);
 
   const lerp = useCallback((start, end, factor) => {
     return start + (end - start) * factor;
   }, []);
 
   useEffect(() => {
-    const cursor = cursorRef.current;
-    if (!cursor) return;
+    const dot = dotRef.current;
+    const ring = ringRef.current;
+    if (!dot || !ring) return;
 
     // Don't run on touch devices
     if (window.matchMedia("(hover: none)").matches) return;
 
     const handleMouseMove = (e) => {
-      targetRef.current.x = e.clientX;
-      targetRef.current.y = e.clientY;
+      targetPos.current.x = e.clientX;
+      targetPos.current.y = e.clientY;
     };
 
     const handleMouseOver = (e) => {
@@ -31,7 +35,9 @@ export default function CustomCursor() {
         target.closest("button") ||
         target.closest("[data-cursor]")
       ) {
-        cursor.classList.add("is-hovering");
+        isHovering.current = true;
+        dot.classList.add("is-hovering");
+        ring.classList.add("is-hovering");
       }
     };
 
@@ -42,24 +48,33 @@ export default function CustomCursor() {
         target.closest("button") ||
         target.closest("[data-cursor]")
       ) {
-        cursor.classList.remove("is-hovering");
+        isHovering.current = false;
+        dot.classList.remove("is-hovering");
+        ring.classList.remove("is-hovering");
       }
     };
 
     const handleMouseLeave = () => {
-      cursor.classList.add("is-hidden");
+      dot.classList.add("is-hidden");
+      ring.classList.add("is-hidden");
     };
 
     const handleMouseEnter = () => {
-      cursor.classList.remove("is-hidden");
+      dot.classList.remove("is-hidden");
+      ring.classList.remove("is-hidden");
     };
 
     const animate = () => {
-      posRef.current.x = lerp(posRef.current.x, targetRef.current.x, 0.15);
-      posRef.current.y = lerp(posRef.current.y, targetRef.current.y, 0.15);
+      // Dot follows mouse directly (fast)
+      dotPos.current.x = lerp(dotPos.current.x, targetPos.current.x, 0.35);
+      dotPos.current.y = lerp(dotPos.current.y, targetPos.current.y, 0.35);
 
-      cursor.style.left = `${posRef.current.x}px`;
-      cursor.style.top = `${posRef.current.y}px`;
+      // Ring follows with 120ms lag (slower lerp)
+      ringPos.current.x = lerp(ringPos.current.x, targetPos.current.x, 0.12);
+      ringPos.current.y = lerp(ringPos.current.y, targetPos.current.y, 0.12);
+
+      dot.style.transform = `translate(${dotPos.current.x - (isHovering.current ? 6 : 4)}px, ${dotPos.current.y - (isHovering.current ? 6 : 4)}px)`;
+      ring.style.transform = `translate(${ringPos.current.x - (isHovering.current ? 26 : 18)}px, ${ringPos.current.y - (isHovering.current ? 26 : 18)}px)`;
 
       rafRef.current = requestAnimationFrame(animate);
     };
@@ -82,5 +97,10 @@ export default function CustomCursor() {
     };
   }, [lerp]);
 
-  return <div ref={cursorRef} className="custom-cursor" aria-hidden="true" />;
+  return (
+    <>
+      <div ref={dotRef} className="cursor-dot" aria-hidden="true" />
+      <div ref={ringRef} className="cursor-ring" aria-hidden="true" />
+    </>
+  );
 }
