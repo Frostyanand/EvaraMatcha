@@ -4,18 +4,15 @@ import Image from "next/image";
 import ScrollReveal from "@/components/ScrollReveal";
 
 const GALLERY_IMAGES = [
-  { src: "/images/space-barista.png", alt: "Barista preparing matcha", class: "gallery-large" },
-  { src: "/images/space-corner.png", alt: "Cozy corner", class: "gallery-small" },
-  { src: "/images/story-matcha.png", alt: "Matcha preparation", class: "gallery-tall" },
-  { src: "/images/drink-iced.png", alt: "Iced Matcha Latte", class: "gallery-small" },
-  { src: "/images/cafe-interior.png", alt: "Cafe interior", class: "gallery-wide" },
-  { src: "/images/space-table.png", alt: "Table view", class: "gallery-small" },
-  { src: "/images/space-seating.png", alt: "People sitting", class: "gallery-tall" },
-  { src: "/images/hero-matcha.png", alt: "Matcha bowl", class: "gallery-large" },
-  { src: "/images/drink-mango.png", alt: "Mango matcha", class: "gallery-small" },
-  { src: "/images/space-details.png", alt: "Ceramic cups", class: "gallery-small" },
-  { src: "/images/cafe-interior.png", alt: "Cafe vibe", class: "gallery-wide" },
-  { src: "/images/space-corner.png", alt: "Dark ambiance", class: "gallery-wide" },
+  { src: "/images/space-barista.png", alt: "Barista preparing matcha", class: "grid-feat" },
+  { src: "/images/cafe-interior.png", alt: "Cafe interior", class: "grid-wide" },
+  { src: "/images/drink-iced.png", alt: "Iced Matcha Latte", class: "grid-sq" },
+  { src: "/images/space-details.png", alt: "Ceramic cups", class: "grid-sq" },
+  { src: "/images/space-seating.png", alt: "People sitting", class: "grid-tall" },
+  { src: "/images/space-corner.png", alt: "Cozy corner", class: "grid-wide" },
+  { src: "/images/story-matcha.png", alt: "Matcha preparation", class: "grid-sq" },
+  { src: "/images/hero-matcha.png", alt: "Matcha bowl", class: "grid-sq" },
+  { src: "/images/space-table.png", alt: "Table view", class: "grid-wide" },
 ];
 
 export default function Space() {

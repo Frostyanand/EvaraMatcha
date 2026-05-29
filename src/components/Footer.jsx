@@ -30,14 +30,6 @@ export default function Footer() {
               </div>
               
               <div style={{ marginTop: "2rem" }}>
-                <a
-                  href="https://maps.app.goo.gl/oaxyhc7JNyJCmikm77g_st=ic"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-outline"
-                >
-                  Get Directions <span className="arrow">→</span>
-                </a>
               </div>
             </div>
           </ScrollReveal>
@@ -46,6 +38,25 @@ export default function Footer() {
             <div className="footer-monogram-container">
               <div className="footer-monogram-huge">
                 EVARA<br />MATCHA
+              </div>
+              <div style={{ textAlign: "right", marginTop: "0.5rem", paddingRight: "0.5rem" }}>
+                <a
+                  href="https://maps.app.goo.gl/oaxyhc7JNyJCmikm77g_st=ic"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ 
+                    color: "var(--gold)", 
+                    fontSize: "0.85rem", 
+                    textDecoration: "none",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    fontStyle: "italic",
+                    transition: "opacity 0.3s ease"
+                  }}
+                >
+                  Get Directions <span>→</span>
+                </a>
               </div>
             </div>
           </ScrollReveal>
@@ -71,22 +82,28 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="footer-bottom">
-          <span>© {new Date().getFullYear()} EVARAMATCHA</span>
-          <ul className="footer-bottom-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#menu">Menu</a></li>
-            <li><a href="#experience">Experience</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#visit">Visit</a></li>
-          </ul>
-          <a
-            href="https://instagram.com/evaramatcha"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="footer-social"
-          >
-            @evaramatcha
-          </a>
+          <span className="footer-address" style={{ maxWidth: '60%', lineHeight: '1.6' }}>
+            25, junction of 6th E main and, Chunchgatta Main Rd, Gaurav Nagar, JP Nagar 7th Phase, Bengaluru, Karnataka 560078
+          </span>
+          <div className="footer-socials" style={{ display: 'flex', gap: '1.25rem', alignItems: 'center' }}>
+            <a href="#" className="footer-social" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </a>
+            <a href="#" className="footer-social" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3.81l.3-4H14V7a1 1 0 0 1 1-1h3z"></path>
+              </svg>
+            </a>
+            <a href="#" className="footer-social" aria-label="Twitter">
+              <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
     </footer>

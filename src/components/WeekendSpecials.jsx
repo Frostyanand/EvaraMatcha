@@ -5,17 +5,17 @@ const DESSERTS = [
   {
     name: "Strawberry Matcha Brownie",
     desc: "Rich, fudgy brownie infused with matcha and topped with strawberry glaze.",
-    image: "/images/hero-matcha.png",
+    image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&q=80&w=800",
   },
   {
     name: "Matcha Cheesecake",
     desc: "Creamy cheesecake with a vibrant matcha layer and buttery biscuit base.",
-    image: "/images/story-matcha.png",
+    image: "https://images.unsplash.com/photo-1557308536-ee471ef2c390?auto=format&fit=crop&q=80&w=800",
   },
   {
     name: "Matcha Tiramisu",
     desc: "Classic Italian dessert reimagined with layers of matcha cream and espresso.",
-    image: "/images/hero-matcha.png",
+    image: "https://images.unsplash.com/photo-1586040140378-b5634cb4c8fc?auto=format&fit=crop&q=80&w=800",
   },
 ];
 
