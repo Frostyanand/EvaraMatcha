@@ -1,82 +1,63 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function Hero() {
-  const contentRef = useRef(null);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    // Staggered entrance animation for hero elements
-    const elements = contentRef.current?.querySelectorAll("[data-hero-animate]");
-    if (!elements) return;
-
-    elements.forEach((el, index) => {
-      el.style.opacity = "0";
-      el.style.transform = "translateY(30px)";
-      el.style.transition = `opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) ${index * 150}ms, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) ${index * 150}ms`;
-
-      // Trigger after a brief delay for page load
-      setTimeout(() => {
-        el.style.opacity = "1";
-        el.style.transform = "translateY(0)";
-      }, 100);
-    });
+    const t = setTimeout(() => setReady(true), 200);
+    return () => clearTimeout(t);
   }, []);
 
   return (
-    <section id="home" className="hero">
-      <div className="container hero-grid" ref={contentRef}>
-        {/* Left: Content */}
-        <div className="hero-content">
-          <span className="hero-tag" data-hero-animate>
-            JAPANESE HERITAGE. MODERN INDULGENCE.
-          </span>
+    <section id="home" className={`hero ${ready ? "hero--ready" : ""}`}>
 
-          <h1 className="hero-heading" data-hero-animate>
-            Crafted Slowly.
-            <br />
-            Savored Deeply.
-          </h1>
-
-          <p className="hero-sub" data-hero-animate>
-            A matcha-led café where Japanese tradition meets contemporary
-            indulgence. Ceremonial-grade matcha, specialty coffee, and
-            weekend desserts.
-          </p>
-
-          <div className="hero-actions" data-hero-animate>
-            <a href="#menu" className="btn btn-primary">
-              Explore Menu <span className="arrow">→</span>
-            </a>
-            <a href="#visit" className="btn btn-outline">
-              Visit Café <span className="arrow">→</span>
-            </a>
-          </div>
-        </div>
-
-        {/* Right: Image */}
-        <div className="hero-image-wrapper" data-hero-animate>
-          <div className="hero-image">
-            <Image
-              src="/images/hero-matcha.png"
-              alt="Ceremonial matcha being whisked in a dark ceramic bowl"
-              width={520}
-              height={620}
-              priority
-              style={{ objectFit: "cover", borderRadius: "24px", width: "100%", height: "auto" }}
-            />
-          </div>
-        </div>
+      {/* ── Video layer ── */}
+      <div className="hero-video-wrapper">
+        <video
+          className="hero-video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          id="hero-video"
+        >
+          <source src="/hero-bg.mp4" type="video/mp4" />
+        </video>
       </div>
 
-      {/* Scroll text (left edge, rotated) */}
-      <span className="hero-scroll-text">SCROLL TO EXPLORE</span>
+      {/* ── Overlays ── */}
+      <div className="hero-overlay" aria-hidden="true" />
+      <div className="hero-vignette" aria-hidden="true" />
 
-      {/* Scroll indicator */}
-      <div className="hero-scroll-indicator">
-        <div className="line"></div>
+      {/* ── Centered Content ── */}
+      <div className="hero-center">
+
+        <p className="hero-eyebrow">日本の抹茶体験</p>
+
+        <h1 className="hero-headline">
+          <span className="hero-line hero-line-1">Where Matcha</span>
+          <span className="hero-line hero-line-2">Becomes Ceremony.</span>
+        </h1>
+
+        <span className="hero-rule" aria-hidden="true" />
+
+        <p className="hero-sub">Ceremonial matcha &middot; Specialty coffee &middot; Handcrafted desserts</p>
+
+        <a href="#visit" className="hero-cta-btn" id="hero-reserve-btn">
+          Discover the Experience
+        </a>
+
       </div>
+
+      {/* ── Bottom subtle branding ── */}
+      <div className="hero-bottom-strip">
+        <span>JP Nagar, Bangalore</span>
+        <span className="hero-bottom-dot">&middot;</span>
+        <span>Open Daily 11 AM – 8 PM</span>
+      </div>
+
     </section>
   );
 }
