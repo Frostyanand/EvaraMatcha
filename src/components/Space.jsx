@@ -5,11 +5,11 @@ import ScrollReveal from "@/components/ScrollReveal";
 import Carousel from "@/components/Carousel";
 
 const GALLERY_IMAGES = [
-  { src: "/images/hero-matcha.png", alt: "Café interior — warm ambient lighting" },
+  { src: "/images/cafe-interior.png", alt: "Café interior — warm ambient lighting" },
   { src: "/images/story-matcha.png", alt: "Matcha preparation station" },
   { src: "/images/hero-matcha.png", alt: "Cozy seating corner" },
-  { src: "/images/story-matcha.png", alt: "Tea ceremony setup" },
-  { src: "/images/hero-matcha.png", alt: "Bar area with matcha tools" },
+  { src: "/images/drink-iced.png", alt: "Iced Matcha Latte" },
+  { src: "/images/drink-mango.png", alt: "Mango Matcha Latte" },
 ];
 
 export default function Space() {

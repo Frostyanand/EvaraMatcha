@@ -1,96 +1,85 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 
 export default function Carousel({ items, renderItem, className = "" }) {
-  const containerRef = useRef(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const intervalRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(Math.floor((items?.length || 0) / 2));
   const isHoveredRef = useRef(false);
 
-  const itemCount = items?.length || 0;
+  const nextSlide = useCallback(() => {
+    setActiveIndex((prev) => (prev + 1) % items.length);
+  }, [items?.length]);
 
-  const updateActiveIndex = useCallback(() => {
-    const container = containerRef.current;
-    if (!container || !container.children.length) return;
-
-    const scrollLeft = container.scrollLeft;
-    const itemWidth = container.children[0].offsetWidth + 20; // gap
-    const index = Math.round(scrollLeft / itemWidth);
-    setActiveIndex(Math.min(index, itemCount - 1));
-  }, [itemCount]);
-
-  const scrollToIndex = useCallback(
-    (index) => {
-      const container = containerRef.current;
-      if (!container || !container.children.length) return;
-
-      const itemWidth = container.children[0].offsetWidth + 20;
-      container.scrollTo({
-        left: index * itemWidth,
-        behavior: "smooth",
-      });
-    },
-    []
-  );
-
-  // Auto-play
   useEffect(() => {
-    if (itemCount <= 1) return;
+    if (!items || items.length <= 1) return;
 
-    const startAutoPlay = () => {
-      intervalRef.current = setInterval(() => {
-        if (isHoveredRef.current) return;
+    const interval = setInterval(() => {
+      if (!isHoveredRef.current) {
+        nextSlide();
+      }
+    }, 4000);
 
-        setActiveIndex((prev) => {
-          const next = (prev + 1) % itemCount;
-          scrollToIndex(next);
-          return next;
-        });
-      }, 4000);
-    };
-
-    startAutoPlay();
-    return () => clearInterval(intervalRef.current);
-  }, [itemCount, scrollToIndex]);
-
-  const handleMouseEnter = () => {
-    isHoveredRef.current = true;
-  };
-
-  const handleMouseLeave = () => {
-    isHoveredRef.current = false;
-  };
+    return () => clearInterval(interval);
+  }, [items?.length, nextSlide]);
 
   if (!items || items.length === 0) return null;
 
   return (
-    <div className={`carousel-wrapper ${className}`}>
-      <div
-        ref={containerRef}
-        className="carousel-container"
-        onScroll={updateActiveIndex}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
-        {items.map((item, index) => (
-          <div key={index} className="carousel-item">
-            {renderItem ? renderItem(item, index) : null}
-          </div>
-        ))}
-      </div>
+    <div 
+      className={`carousel-3d-wrapper ${className}`}
+      onMouseEnter={() => (isHoveredRef.current = true)}
+      onMouseLeave={() => (isHoveredRef.current = false)}
+    >
+      <div className="carousel-3d-container">
+        {items.map((item, index) => {
+          let offset = index - activeIndex;
+          
+          // Wrap around logic for infinite loop effect
+          const half = Math.floor(items.length / 2);
+          if (offset > half) offset -= items.length;
+          if (offset < -half) offset += items.length;
 
+          const absOffset = Math.abs(offset);
+          const isActive = offset === 0;
+
+          // Calculate transforms based on offset
+          // translateX percentage relative to item width
+          const translateX = offset * 65; 
+          const scale = 1 - absOffset * 0.15;
+          const zIndex = 10 - absOffset;
+          const blur = absOffset * 3;
+          const opacity = absOffset > 2 ? 0 : 1; // Hide items beyond 2 steps away (so 5 items visible total: -2, -1, 0, 1, 2)
+
+          return (
+            <div
+              key={index}
+              className={`carousel-3d-item ${isActive ? "active" : ""}`}
+              style={{
+                transform: `translateX(calc(-50% + ${translateX}%)) scale(${scale})`,
+                zIndex: zIndex,
+                opacity: opacity,
+                filter: `blur(${blur}px)`,
+                pointerEvents: isActive ? "auto" : "none",
+                cursor: isActive ? "default" : "pointer"
+              }}
+              onClick={() => {
+                if (!isActive) setActiveIndex(index);
+              }}
+            >
+              {renderItem ? renderItem(item, index) : null}
+            </div>
+          );
+        })}
+      </div>
+      
       {/* Navigation dots */}
-      {itemCount > 1 && (
+      {items.length > 1 && (
         <div className="carousel-dots">
           {items.map((_, index) => (
             <button
               key={index}
               className={`carousel-dot ${index === activeIndex ? "active" : ""}`}
-              onClick={() => {
-                scrollToIndex(index);
-                setActiveIndex(index);
-              }}
+              onClick={() => setActiveIndex(index)}
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}

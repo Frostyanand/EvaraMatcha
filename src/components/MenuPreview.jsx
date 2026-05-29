@@ -6,11 +6,10 @@ import Carousel from "@/components/Carousel";
 
 const CAROUSEL_IMAGES = [
   { src: "/images/hero-matcha.png", name: "Ceremonial Matcha" },
+  { src: "/images/drink-iced.png", name: "Iced Matcha Latte" },
   { src: "/images/story-matcha.png", name: "Matcha Preparation" },
-  { src: "/images/hero-matcha.png", name: "Iced Matcha Latte" },
-  { src: "/images/story-matcha.png", name: "Mango Matcha" },
-  { src: "/images/hero-matcha.png", name: "Matcha Espresso" },
-  { src: "/images/story-matcha.png", name: "Specialty Coffee" },
+  { src: "/images/drink-mango.png", name: "Mango Matcha" },
+  { src: "/images/cafe-interior.png", name: "Our Space" },
 ];
 
 const MENU_ITEMS = [
