@@ -7,34 +7,45 @@ export default function Footer() {
         {/* Top: Info + Monogram */}
         <div className="footer-top">
           <ScrollReveal>
-            <div className="footer-brand">
-              <h3>Evara Matcha</h3>
-              <div className="footer-location">
-                <span>📍</span>
+            <div className="footer-contact">
+              <h3 className="footer-title">Evara Matcha</h3>
+              
+              <div className="footer-location" style={{ marginBottom: "2rem" }}>
+                <span style={{ color: "#E94E77" }}>📍</span>
                 <span>JP Nagar, Bangalore</span>
               </div>
-              <div className="footer-hours-mini">
-                <span>Weekdays — 11:00 AM – 8:00 PM</span>
-                <span>Weekends — 11:00 AM – 10:00 PM</span>
-                <span className="closed-note">Closed on Mondays</span>
+              
+              <div className="footer-hours">
+                <div className="footer-hour-row">
+                  <span>Weekdays</span>
+                  <span>11:00 AM – 8:00 PM</span>
+                </div>
+                <div className="footer-hour-row">
+                  <span>Weekends</span>
+                  <span>11:00 AM – 10:00 PM</span>
+                </div>
+                <div className="footer-hour-row">
+                  <span className="closed-note" style={{ fontStyle: "italic", color: "var(--gold)", fontSize: "0.85rem", marginTop: "0.5rem" }}>Closed on Mondays</span>
+                </div>
               </div>
-              <a
-                href="https://maps.app.goo.gl/oaxyhc7JNyJCmikm77g_st=ic"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-outline"
-              >
-                Get Directions <span className="arrow">→</span>
-              </a>
+              
+              <div style={{ marginTop: "2rem" }}>
+                <a
+                  href="https://maps.app.goo.gl/oaxyhc7JNyJCmikm77g_st=ic"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-outline"
+                >
+                  Get Directions <span className="arrow">→</span>
+                </a>
+              </div>
             </div>
           </ScrollReveal>
 
           <ScrollReveal direction="right" delay={200}>
-            <div className="footer-monogram">
-              <div className="footer-monogram-text">
-                EVARA
-                <br />
-                MATCHA
+            <div className="footer-monogram-container">
+              <div className="footer-monogram-huge">
+                EVARA<br />MATCHA
               </div>
             </div>
           </ScrollReveal>
