@@ -7,8 +7,9 @@ export default function Carousel({ items, renderItem, className = "" }) {
   const isHoveredRef = useRef(false);
 
   const nextSlide = useCallback(() => {
+    if (!items || items.length === 0) return;
     setActiveIndex((prev) => (prev + 1) % items.length);
-  }, [items?.length]);
+  }, [items]);
 
   useEffect(() => {
     if (!items || items.length <= 1) return;
@@ -20,7 +21,7 @@ export default function Carousel({ items, renderItem, className = "" }) {
     }, 4000);
 
     return () => clearInterval(interval);
-  }, [items?.length, nextSlide]);
+  }, [items, nextSlide]);
 
   if (!items || items.length === 0) return null;
 
