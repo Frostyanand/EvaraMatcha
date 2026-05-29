@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 import JourneyPath from "@/components/JourneyPath";
 
@@ -23,6 +26,38 @@ const JOURNEY_NODES = [
 ];
 
 export default function Journey() {
+  const videosRef = useRef([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const video = entry.target;
+          if (entry.isIntersecting) {
+            video.play().catch(e => console.log("Video play interrupted:", e));
+          } else {
+            video.pause();
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: "-25% 0px -25% 0px", // Triggers when the video is within the middle 50% of the viewport
+        threshold: 0
+      }
+    );
+
+    videosRef.current.forEach((video) => {
+      if (video) observer.observe(video);
+    });
+
+    return () => {
+      videosRef.current.forEach((video) => {
+        if (video) observer.unobserve(video);
+      });
+    };
+  }, []);
+
   return (
     <section className="section journey-section">
       <div className="container">
@@ -36,15 +71,15 @@ export default function Journey() {
         </ScrollReveal>
 
         <div className="journey-nodes">
-          {/* SVG Squiggle Path (desktop only) */}
+          {/* Timeline center line */}
           <JourneyPath />
 
           {JOURNEY_NODES.map((node, index) => (
             <ScrollReveal key={index} delay={200}>
-              <div className="journey-node">
+              <div className={`journey-node ${index % 2 !== 0 ? 'is-reversed' : ''}`}>
                 {/* Video Container */}
                 <div className="journey-video-container" data-cursor>
-                  <div className="journey-video-placeholder">
+                  <div className="journey-video-placeholder" style={{ zIndex: 1 }}>
                     <div className="journey-play-btn">
                       <div className="journey-play-icon" />
                     </div>
@@ -52,15 +87,19 @@ export default function Journey() {
                       {node.videoLabel}
                     </span>
                   </div>
-                  {/* Actual video element ready for src */}
-                  {/* <video preload="none" playsInline muted loop>
-                    <source src={`/videos/${node.number}.mp4`} type="video/mp4" />
-                  </video> */}
+                  <video 
+                    ref={el => videosRef.current[index] = el}
+                    autoPlay={true}
+                    playsInline={true}
+                    muted={true}
+                    loop={true}
+                    src="/videos/flower.mp4"
+                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 10 }}
+                  />
                 </div>
 
                 {/* Text */}
                 <div className="journey-text">
-                  <span className="journey-step-number">{node.number}</span>
                   <h3 className="journey-step-title">{node.title}</h3>
                   <p className="journey-step-desc">{node.desc}</p>
                 </div>

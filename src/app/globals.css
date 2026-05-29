@@ -614,6 +614,14 @@ img {
 
 
 /* ============================================================
+   Base Layout
+   ============================================================ */
+main {
+  min-height: 100vh;
+}
+
+
+/* ============================================================
    NAVBAR
    ============================================================ */
 
@@ -1472,36 +1480,41 @@ img {
   z-index: 2;
 }
 
+.journey-nodes {
+  position: relative;
+  padding-bottom: 2rem;
+}
+
 .journey-node {
   display: grid;
-  gap: 4rem;
+  gap: 6rem;
   align-items: center;
+  grid-template-columns: 1fr 1fr;
 }
 
-.journey-node:nth-child(odd) {
-  grid-template-columns: 0.6fr 0.4fr;
+.journey-node.is-reversed {
+  grid-template-columns: 1fr 1fr;
 }
 
-.journey-node:nth-child(even) {
-  grid-template-columns: 0.4fr 0.6fr;
-}
-
-.journey-node:nth-child(even) .journey-video-container {
+.journey-node.is-reversed .journey-video-container {
   order: 2;
 }
 
-.journey-node:nth-child(even) .journey-text {
+.journey-node.is-reversed .journey-text {
   order: 1;
   text-align: right;
 }
 
 .journey-video-container {
-  border-radius: 20px;
+  border-radius: 16px;
   overflow: hidden;
   background-color: var(--bg-secondary);
   border: var(--border-card);
   position: relative;
   aspect-ratio: 16 / 10;
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .journey-video-placeholder {
@@ -1573,54 +1586,47 @@ img {
   max-width: 380px;
 }
 
-.journey-node:nth-child(even) .journey-step-desc {
+.journey-node.is-reversed .journey-step-desc {
   margin-left: auto;
 }
 
-/* SVG Journey Path */
-.journey-path-svg {
+/* Center Timeline Track */
+.journey-progress-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  background-color: rgba(255, 255, 255, 0.05);
+  z-index: 1;
+}
+
+.journey-progress-fill {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.journey-squiggle {
-  fill: none;
-  stroke: var(--matcha);
-  stroke-width: 1.5;
-  filter: url(#pathGlow);
-}
-
-.journey-node-marker {
-  fill: var(--bg-secondary);
-  stroke: var(--matcha);
-  stroke-width: 1.5;
-  transition: fill 0.6s var(--ease-smooth);
-}
-
-.journey-node-marker.is-active {
-  fill: var(--gold);
-  stroke: var(--gold);
+  height: 0%;
+  background-color: var(--matcha);
+  box-shadow: 0 0 10px var(--matcha);
+  transition: height 0.1s ease-out;
 }
 
 @media (max-width: 768px) {
-  .journey-node:nth-child(odd),
-  .journey-node:nth-child(even) {
+  .journey-node,
+  .journey-node.is-reversed {
     grid-template-columns: 1fr;
   }
-  .journey-node:nth-child(even) .journey-video-container,
-  .journey-node:nth-child(even) .journey-text {
+  .journey-node.is-reversed .journey-video-container,
+  .journey-node.is-reversed .journey-text {
     order: unset;
     text-align: left;
   }
-  .journey-node:nth-child(even) .journey-step-desc {
+  .journey-node.is-reversed .journey-step-desc {
     margin-left: 0;
   }
-  .journey-path-svg {
+  .journey-progress-wrapper {
     display: none;
   }
 }

@@ -7,41 +7,20 @@ import Space from "@/components/Space";
 import WeekendSpecials from "@/components/WeekendSpecials";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
-import DustDissolve from "@/components/DustDissolve";
+import Gallery from "@/components/Gallery";
 
 export default function Home() {
   return (
     <main>
       <Hero />
-
-      <DustDissolve>
-        <Philosophy />
-      </DustDissolve>
-
-      <DustDissolve>
-        <MenuPreview />
-      </DustDissolve>
-
-      <DustDissolve>
-        <Ritual />
-      </DustDissolve>
-
-      <DustDissolve>
-        <Journey />
-      </DustDissolve>
-
-      <DustDissolve>
-        <Space />
-      </DustDissolve>
-
-      <DustDissolve>
-        <WeekendSpecials />
-      </DustDissolve>
-
-      <DustDissolve>
-        <Testimonials />
-      </DustDissolve>
-
+      <Philosophy />
+      <MenuPreview />
+      <Gallery />
+      <Ritual />
+      <Journey />
+      <Space />
+      <WeekendSpecials />
+      <Testimonials />
       <Footer />
     </main>
   );
